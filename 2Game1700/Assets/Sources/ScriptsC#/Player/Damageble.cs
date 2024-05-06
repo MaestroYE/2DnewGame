@@ -1,9 +1,16 @@
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 
 public class Damageble : MonoBehaviour
 {
     private bool _immortle;
+
+    [SerializeField] private GameObject isEffect;
+    [SerializeField] private AudioClip Swordsound;
+    [SerializeField] private AudioClip Shieldsound;
+    private AudioSource myAudio;
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out EnemyPatrolling enemy))
@@ -20,6 +27,7 @@ public class Damageble : MonoBehaviour
         {
             Inventory.Instance.RemoveItem(0);
             Destroy(enemy.gameObject);
+            myAudio.PlayOneShot(Swordsound);
         }
         else if (Inventory.Instance.GetShieldCount() > 0)
         {
@@ -34,7 +42,9 @@ public class Damageble : MonoBehaviour
     private IEnumerator Immortle()
     {
         _immortle = true;
+        isEffect.SetActive(_immortle);
         yield return new WaitForSeconds(3);
         _immortle = false;
+        isEffect.SetActive(_immortle);
     }
 }
