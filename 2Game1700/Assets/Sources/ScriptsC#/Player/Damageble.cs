@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Damageble : MonoBehaviour
 {
-    private bool _immortle;
+    private bool _immortle =false ;
 
     [SerializeField] private GameObject isEffect;
     [SerializeField] private AudioClip Swordsound;
     [SerializeField] private AudioClip Shieldsound;
     private AudioSource myAudio;
-    
+
+    private void Start()
+    {
+        myAudio = GetComponent<AudioSource>();  
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out EnemyPatrolling enemy))
@@ -32,6 +37,8 @@ public class Damageble : MonoBehaviour
         else if (Inventory.Instance.GetShieldCount() > 0)
         {
             StartCoroutine(Immortle());
+            Inventory.Instance.RemoveItem(1);
+            myAudio.PlayOneShot(Shieldsound);
         }
         else
         {
@@ -41,10 +48,10 @@ public class Damageble : MonoBehaviour
 
     private IEnumerator Immortle()
     {
-        _immortle = true;
+        _immortle = true;      
         isEffect.SetActive(_immortle);
         yield return new WaitForSeconds(3);
-        _immortle = false;
+        _immortle = false;      
         isEffect.SetActive(_immortle);
     }
 }
