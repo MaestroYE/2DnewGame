@@ -11,6 +11,11 @@ public class LoadSceneManager : MonoBehaviour
     {
         SceneManager.LoadScene(ID);
     }
+    public void LoadActiveScene()
+    {
+        var activeSceneID = SceneManager.GetActiveScene().buildIndex;
+        LoadSceneID(activeSceneID);
+    }
     public void ExitGame()
     {
         Application.Quit();

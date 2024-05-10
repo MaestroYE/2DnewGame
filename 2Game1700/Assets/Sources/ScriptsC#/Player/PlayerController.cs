@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashTime = 0.1f;
     [SerializeField] private float dashReloadTime = 1.5f;
 
+    private bool _isWall;
     private int _jumpCount;
     private bool _isGround;
     private bool _isDash;
@@ -83,6 +85,13 @@ public class PlayerController : MonoBehaviour
 
         _animator.SetBool("Jump", _isGround == false);
         _animator.SetBool("DoubleJump", _jumpCount > 1);
+    }
+
+    public void SetIsWall(bool wall)
+    {
+        _isWall = wall; 
+        _rigidbody.simulated = _isWall;
+     
     }
 
     public void SetIsGround(bool ground)
