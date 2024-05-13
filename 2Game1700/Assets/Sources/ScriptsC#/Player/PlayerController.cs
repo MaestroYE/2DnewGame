@@ -90,9 +90,15 @@ public class PlayerController : MonoBehaviour
     public void SetIsWall(bool wall)
     {
         _isWall = wall; 
-        _rigidbody.simulated = _isWall;
-     
+
+        if (Input.GetKey(KeyCode.E)&&_isWall == true) 
+        {
+            _rigidbody.simulated = false;
+        }
+        
+       
     }
+    
 
     public void SetIsGround(bool ground)
     {
